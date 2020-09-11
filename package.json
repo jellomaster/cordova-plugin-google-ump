@@ -1,0 +1,37 @@
+{
+  "author": {
+    "name": "jellomaster"
+  },
+  "bugs": {
+    "url": "https://github.com/jellomaster/cordova-plugin-google-ump/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-google-ump",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "description": "ionic wrapper for google ump sdk",
+  "homepage": "https://github.com/jellomaster/cordova-plugin-google-ump#readme",
+  "keywords": [
+    "google",
+    "consent",
+    "sdk",
+    "admob",
+    "ads",
+    "funding choices",
+    "idfa",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-google-ump",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jellomaster/cordova-plugin-google-ump.git"
+  },
+  "version": "1.0.0"
+}
