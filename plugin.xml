@@ -28,6 +28,6 @@
 		</config-file>
 
  		<source-file src="src/ios/Ump.swift" />
-        <framework src="GoogleUserMessagingPlatform" type="podspec" spec="~> 2.0.0" />
+        <framework src="GoogleUserMessagingPlatform" type="podspec" spec="~> 1.4.0" />
 	</platform>
 </plugin>
