@@ -10,7 +10,7 @@
 	<keywords>google,consent,sdk,admob,ads,ump,funding choices,User Messaging Platform,gdpr, ATT</keywords>
 	<repo>https://github.com/jellomaster/cordova-plugin-google-ump</repo>
 	<issue>https://github.com/jellomaster/cordova-plugin-google-ump/issues</issue>
-    <dependency id="cordova-plugin-add-swift-support" version="1.7.2"/>
+    <dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
 	
 
 
