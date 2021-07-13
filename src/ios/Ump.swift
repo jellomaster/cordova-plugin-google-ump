@@ -25,7 +25,6 @@ class Ump : CDVPlugin {
             print("DEBUG, adding identifier \(deviceId) to debug ids")
             debugSettings.testDeviceIdentifiers = [deviceId]
             debugSettings.geography = .EEA
-            UMPConsentInformation.sharedInstance.reset()
         }
         
         parameters.debugSettings = debugSettings
@@ -122,5 +121,10 @@ class Ump : CDVPlugin {
     func forceForm(command: CDVInvokedUrlCommand) {
         
         self.loadForm(command: command, forceForm: true)
+    }
+
+    @objc(reset:)
+    func reset(command: CDVInvokedUrlCommand) {
+    	UMPConsentInformation.sharedInstance.reset()
     }
 }

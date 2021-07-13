@@ -9,6 +9,9 @@ var Ump = {
 	},
 	forceForm: function(cb, cbError) {
 		exec(cb, cbError, PLUGIN_NAME, 'forceForm');
+	},
+        reset: function(cb, cbError) {
+	        exec(cb, cbError, PLUGIN_NAME, 'reset');
 	}
 };
 
