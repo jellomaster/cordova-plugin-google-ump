@@ -12,14 +12,12 @@
 	<issue>https://github.com/jellomaster/cordova-plugin-google-ump/issues</issue>
     <dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
 	
+	<js-module src="www/plugin.js" name="plugin">
+		<runs />
+		<clobbers target="Ump" />
+	</js-module>
 
-
-	<!-- ios -->
 	<platform name="ios">
-		<js-module src="www/plugin.js" name="plugin">
-			<runs />
-			<clobbers target="Ump" />
-		</js-module>
 		<config-file target="config.xml" parent="/*">
 			<feature name="Ump">
 				<param name="ios-package" value="Ump" />
@@ -28,6 +26,27 @@
 		</config-file>
 
  		<source-file src="src/ios/Ump.swift" />
-        <framework src="GoogleUserMessagingPlatform" type="podspec" spec="~> 1.4.0" />
+
+		<framework src="GoogleUserMessagingPlatform" type="podspec" spec="~> 1.4.0" />
 	</platform>
+
+	<platform name="android">
+
+          <config-file parent="/*" target="AndroidManifest.xml">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+          </config-file>
+
+	  <config-file target="config.xml" parent="/*">
+            <feature name="Ump">
+              <param name="android-package" value="com.jptrainor.plugins.ump.Ump"/>
+	      <param name="onload" value="true" />
+            </feature>
+	  </config-file>
+	  
+	  <source-file src="src/android/Ump.java" target-dir="src/com/jptrainor/plugins/ump" />
+
+          <framework src="com.google.android.ump:user-messaging-platform:2.0.0" />
+	</platform>
+	
 </plugin>
