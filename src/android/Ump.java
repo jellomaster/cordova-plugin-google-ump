@@ -139,7 +139,7 @@ public class Ump extends CordovaPlugin {
     }
 
     private void forceForm(CallbackContext callbackContext) {
-        this.loadForm(UserMessagingPlatform.getConsentInformation(cordova.getContext()), true, callbackContext);
+        loadForm(UserMessagingPlatform.getConsentInformation(cordova.getContext()), true, callbackContext);
     }
 
     private void reset(CallbackContext callbackContext) {
@@ -155,30 +155,35 @@ public class Ump extends CordovaPlugin {
     }
 
     private void presentForm(ConsentInformation consentInformation, CallbackContext callbackContext) {
-        UserMessagingPlatform.loadConsentForm(cordova.getContext(),
-                new UserMessagingPlatform.OnConsentFormLoadSuccessListener() {
-                    @Override
-                    public void onConsentFormLoadSuccess(ConsentForm consentForm) {
-                        consentForm.show(cordova.getActivity(),
-                                new ConsentForm.OnConsentFormDismissedListener() {
-                                    @Override
-                                    public void onConsentFormDismissed(FormError formError) {
-                                        if (consentInformation.getConsentStatus() == ConsentInformation.ConsentStatus.OBTAINED) {
-                                            success(Consent.OBTAINED, HasShownDialog.SHOWN, FormAvailable.AVAILABLE, callbackContext);
-                                        } else {
-                                            success(Consent.NOT_OBTAINED, HasShownDialog.SHOWN, FormAvailable.AVAILABLE, callbackContext);
-                                        }
-                                    }
-                                });
-                    }
-                },
-                new UserMessagingPlatform.OnConsentFormLoadFailureListener() {
-                    @Override
-                    public void onConsentFormLoadFailure(FormError formError) {
-                        callbackContext.error(formError.getMessage());
-                    }
-                }
-        );
+        cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                UserMessagingPlatform.loadConsentForm(cordova.getContext(),
+                        new UserMessagingPlatform.OnConsentFormLoadSuccessListener() {
+                            @Override
+                            public void onConsentFormLoadSuccess(ConsentForm consentForm) {
+                                consentForm.show(cordova.getActivity(),
+                                        new ConsentForm.OnConsentFormDismissedListener() {
+                                            @Override
+                                            public void onConsentFormDismissed(FormError formError) {
+                                                if (consentInformation.getConsentStatus() == ConsentInformation.ConsentStatus.OBTAINED) {
+                                                    success(Consent.OBTAINED, HasShownDialog.SHOWN, FormAvailable.AVAILABLE, callbackContext);
+                                                } else {
+                                                    success(Consent.NOT_OBTAINED, HasShownDialog.SHOWN, FormAvailable.AVAILABLE, callbackContext);
+                                                }
+                                            }
+                                        });
+                            }
+                        },
+                        new UserMessagingPlatform.OnConsentFormLoadFailureListener() {
+                            @Override
+                            public void onConsentFormLoadFailure(FormError formError) {
+                                callbackContext.error(formError.getMessage());
+                            }
+                        }
+                );
+            }
+        });
     }
 
     private void success(Consent consent, HasShownDialog hasShowDialog, FormAvailable formAvailable, CallbackContext callbackContext) {
