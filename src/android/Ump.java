@@ -186,11 +186,11 @@ public class Ump extends CordovaPlugin {
         });
     }
 
-    private void success(Consent consent, HasShownDialog hasShowDialog, FormAvailable formAvailable, CallbackContext callbackContext) {
+    private void success(Consent consent, HasShownDialog hasShownDialog, FormAvailable formAvailable, CallbackContext callbackContext) {
         JSONObject json = new JSONObject();
         try {
             json.put("consent", consent.getValue());
-            json.put("hasShowDialog", hasShowDialog.getValue());
+            json.put("hasShownDialog", hasShownDialog.getValue());
             json.put("formAvailable", formAvailable.getValue());
             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
         } catch (JSONException e) {
