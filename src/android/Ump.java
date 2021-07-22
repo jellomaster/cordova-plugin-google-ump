@@ -1,6 +1,5 @@
 package com.jptrainor.plugins.ump;
 
-import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.ump.ConsentDebugSettings;
@@ -63,10 +62,6 @@ public class Ump extends CordovaPlugin {
         }
     }
 
-    static String nonNull(String str) {
-        return str == null ? "" : str;
-    }
-
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
@@ -89,6 +84,9 @@ public class Ump extends CordovaPlugin {
             boolean isAgeConsent = args.optBoolean(0);
             boolean isDebug = args.optBoolean(1);
             String testDeviceHashId = args.optString(2);
+            if (testDeviceHashId.equals("null")) {
+                testDeviceHashId = null;
+            }
             verifyConsent(isAgeConsent, isDebug, testDeviceHashId, callbackContext);
             return true;
         } else if (action.equals("forceForm")) {
@@ -108,14 +106,15 @@ public class Ump extends CordovaPlugin {
         ConsentRequestParameters requestParameters;
 
         if (isDebug) {
-            AdvertisingIdClient.Info adInfo = AdvertisingIdClient.getAdvertisingIdInfo(this.cordova.getContext());
-            ConsentDebugSettings debugSettings = new ConsentDebugSettings.Builder(cordova.getActivity())
-                    .setDebugGeography(ConsentDebugSettings.DebugGeography.DEBUG_GEOGRAPHY_EEA)
-                    .addTestDeviceHashedId(nonNull(testDeviceHashId))
-                    .build();
+            ConsentDebugSettings.Builder debugSettingsBuilder = new ConsentDebugSettings.Builder(cordova.getActivity())
+                    .setDebugGeography(ConsentDebugSettings.DebugGeography.DEBUG_GEOGRAPHY_EEA);
+
+            if (testDeviceHashId != null) {
+                debugSettingsBuilder = debugSettingsBuilder.addTestDeviceHashedId(testDeviceHashId);
+            }
 
             requestParameters = new ConsentRequestParameters.Builder()
-                    .setConsentDebugSettings(debugSettings)
+                    .setConsentDebugSettings(debugSettingsBuilder.build())
                     .build();
         } else {
             requestParameters = new ConsentRequestParameters.Builder()
