@@ -1,5 +1,3 @@
-cordova.define("cordova-plugin-google-ump.plugin", function(require, exports, module) {
-
 var exec = require('cordova/exec');
 
 var PLUGIN_NAME = 'Ump';
@@ -17,5 +15,3 @@ var Ump = {
 };
 
 module.exports = Ump;
-
-});
