@@ -63,6 +63,10 @@ public class Ump extends CordovaPlugin {
         }
     }
 
+    static String nonNull(String str) {
+        return str == null ? "" : str;
+    }
+
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
@@ -84,7 +88,8 @@ public class Ump extends CordovaPlugin {
         if (action.equals("verifyConsent")) {
             boolean isAgeConsent = args.optBoolean(0);
             boolean isDebug = args.optBoolean(1);
-            verifyConsent(isAgeConsent, isDebug, callbackContext);
+            String testDeviceHashId = args.optString(2);
+            verifyConsent(isAgeConsent, isDebug, testDeviceHashId, callbackContext);
             return true;
         } else if (action.equals("forceForm")) {
             forceForm(callbackContext);
@@ -97,7 +102,7 @@ public class Ump extends CordovaPlugin {
         return false;
     }
 
-    private void verifyConsent(boolean isAgeConsent, boolean isDebug, CallbackContext callbackContext)
+    private void verifyConsent(boolean isAgeConsent, boolean isDebug, String testDeviceHashId, CallbackContext callbackContext)
             throws GooglePlayServicesNotAvailableException, IOException, GooglePlayServicesRepairableException {
 
         ConsentRequestParameters requestParameters;
@@ -106,7 +111,7 @@ public class Ump extends CordovaPlugin {
             AdvertisingIdClient.Info adInfo = AdvertisingIdClient.getAdvertisingIdInfo(this.cordova.getContext());
             ConsentDebugSettings debugSettings = new ConsentDebugSettings.Builder(cordova.getActivity())
                     .setDebugGeography(ConsentDebugSettings.DebugGeography.DEBUG_GEOGRAPHY_EEA)
-                    .addTestDeviceHashedId(adInfo.getId())
+                    .addTestDeviceHashedId(nonNull(testDeviceHashId))
                     .build();
 
             requestParameters = new ConsentRequestParameters.Builder()
