@@ -148,6 +148,7 @@ public class Ump extends CordovaPlugin {
 
     private void reset(CallbackContext callbackContext) {
         UserMessagingPlatform.getConsentInformation(cordova.getContext()).reset();
+        callbackContext.success();
     }
 
     private void loadForm(ConsentInformation consentInformation, boolean forceForm, CallbackContext callbackContext) {
