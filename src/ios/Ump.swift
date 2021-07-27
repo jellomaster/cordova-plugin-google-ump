@@ -126,5 +126,6 @@ class Ump : CDVPlugin {
     @objc(reset:)
     func reset(command: CDVInvokedUrlCommand) {
     	UMPConsentInformation.sharedInstance.reset()
+	self.commandDelegate.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
     }
 }
