@@ -61,7 +61,7 @@ Should be called on every app start. Checks and returns a consent status. If the
 verifyConsent(isAgeConsent :boolean, isDebug :boolean) :Promise<ConsentResult>
 ```
 
-- isAgeConsent: If set to true, on the dialog is shown an option to the user, where he can choose to buy an ad-free pro version.
+- isAgeConsent: True means the users are under the age of consent. False means users are not under age.
 - isDebug: If set to true, the device acts like it is in the EEA, even if it is not.
 
 
