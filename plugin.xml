@@ -2,7 +2,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         id="cordova-plugin-google-ump"
-        version="1.0.0">
+        version="1.0.1">
   <name>Plugin for Google UMP SDK</name>
   <description>Cordova wrapper for Google UMP SDK.</description>
   <author>jellomaster</author>
@@ -28,7 +28,7 @@
 
     <source-file src="src/ios/Ump.swift" />
 
-    <framework src="GoogleUserMessagingPlatform" type="podspec" spec="~> 1.4.0" />
+    <framework src="GoogleUserMessagingPlatform" type="podspec" spec="~> 2.1.0" />
   </platform>
 
   <platform name="android">
@@ -47,7 +47,7 @@
     
     <source-file src="src/android/Ump.java" target-dir="src/com/jptrainor/plugins/ump" />
 
-    <framework src="com.google.android.ump:user-messaging-platform:2.0.0" />
+    <framework src="com.google.android.ump:user-messaging-platform:2.1.0" />
   </platform>
   
 </plugin>
