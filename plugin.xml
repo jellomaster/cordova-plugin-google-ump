@@ -28,7 +28,14 @@
 
     <source-file src="src/ios/Ump.swift" />
 
-    <framework src="GoogleUserMessagingPlatform" type="podspec" spec="~> 2.1.0" />
+    <podspec>
+        <config>
+            <source url="https://cdn.cocoapods.org/"/>
+        </config>
+        <pods use-frameworks="true">
+            <pod name="GoogleUserMessagingPlatform" spec="2.1.0" />
+        </pods>
+    </podspec>
   </platform>
 
   <platform name="android">
