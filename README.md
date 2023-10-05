@@ -5,6 +5,11 @@ Google UMP (User Messaging Platform) SDK is used for asking users in the Europea
 
 ## News
 
+**Version 2.1.0 / 2023-10-05:**
+- add reset function
+- android support
+- support for Google User Messagint Platform 2.1.0
+
 **Version 1.0.0 / 2020-09-11:**
 Initial plugin release.
 
@@ -44,8 +49,8 @@ In order to use Google UMP SDK, you need to link your Admob account to Funding C
 
 ## Supported Platforms
 
-- Android (Coming soon)
 - iOS
+- Android
 
 ## Methods
 
@@ -58,26 +63,26 @@ Should be called on every app start. Checks and returns a consent status. If the
 
 ### Params
 ```typescript
-verifyConsent(isAgeConsent :boolean, isDebug :boolean) :Promise<ConsentResult>
+verifyConsent(isAgeConsent :boolean, isDebug :boolean, testDeviceHashId: string) :Promise<ConsentResult>
 ```
 
 - isAgeConsent: True means the users are under the age of consent. False means users are not under age.
 - isDebug: If set to true, the device acts like it is in the EEA, even if it is not.
-
+- testDeviceHashId: Device ID for testing purposes
 
 ### Result
 ```typescript
 interface ConsentResult {
-	consent: boolean; // true if given consent / false other
- dialog
+	consent: boolean; // true if given consent / false other dialog
 	hasShownDialog: boolean; // if false, user already made a decision earlier and there was no need to show the dialog
+	formAvailable: boolean; // whether a consent form is available to the user
 }
 ```
 
 
 ### Example (Ionic)
 ```typescript
-this.ump.verifyConsent(true, false)
+this.ump.verifyConsent(true, false, "")
 			.then((result) => {
 				console.log(result);
 			})
@@ -88,7 +93,7 @@ this.ump.verifyConsent(true, false)
 
 ### Example (Cordova)
 ```javascript
-window['Ump'].verifyConsent(isAgeConsent, isDebug,
+window['Ump'].verifyConsent(isAgeConsent, isDebug, "",
 				function(result) {/* do something with the result */},
 				function(error) {/* handle the error case */}
 			);
@@ -96,8 +101,8 @@ window['Ump'].verifyConsent(isAgeConsent, isDebug,
 
 ## consent.forceForm
 
-Method to change the made decision later. This option should be offered to the user in the settings, that he can change his decision at any time.
-This method has no check if a user is really in the EEA or not, the dialog is shown to every user. Use method verifyConsent on load to see if the user needs to see a form or not
+Method to change the consent decision later. This option should be offered to the user in the settings section of the app.
+This method doesn't check if the user is in EEA or not, the dialog is shown to every user. Use method verifyConsent on load to see if the user needs to see a form or not.
 
 ### Params
 ```typescript
@@ -107,9 +112,10 @@ forceForm() :Promise<ConsentResult>
 ### Result
 ```typescript
 interface ConsentResult {
-    consent: boolean; // true if given consent / false other
- dialog
-    hasShownDialog: boolean; // in this case always true
+	consent: boolean; // true if given consent / false other dialog
+	hasShownDialog: boolean; // if false, user already made a decision earlier and there was no need to show the dialog
+	formAvailable: boolean; // whether a consent form is available to the user
+}
 }
 
 ```
@@ -128,14 +134,40 @@ this.ump.forceForm()
 
 ### Example (Cordova)
 ```javascript
-window['Ump'].then(
+window['Ump'].forceForm(
 				function(result) {/* do something with the result */},
 				function(error) {/* handle the error case */}
 			);
 ```
+
+
+
+## consent.reset
+
+Reset the User's consent choices
+
+### Params
+```typescript
+reset()
+```
+
+### Example (Ionic)
+```typescript
+this.ump.reset();
+```
+
+### Example (Cordova)
+```javascript
+window['Ump'].reset();
+```
+
 
 ## iOS specific issues
 
 When installing the plugin on iOS it will download the Google UMP SDK and install it as a CocoaPod. It will also create a yourprojectname.xcworkspace file. To build 
 your project for iOS you will need to open the .xcworkspace file in XCode and build it there, the command line build does not work correctly with workspaces instead of
 projects.
+
+## Thank you
+
+Credit for the Android work goes to: Jim Trainor (@jptrainor)
